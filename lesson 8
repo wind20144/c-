@@ -1,0 +1,225 @@
+// Задача 1: 
+
+System.Console.WriteLine("Введите количество строк массива");
+int rowsVol = Convert.ToInt32(Console.ReadLine());
+System.Console.WriteLine("Введите количество столбцов массива");
+int columnsVol = Convert.ToInt32(Console.ReadLine());
+
+int[,] array = new int[rowsVol, columnsVol];
+for (int i = 0; i < rowsVol; i++)
+{
+    for (int j = 0; j < columnsVol; j++)
+    {
+        array[i, j] = new Random().Next(11);
+        Console.Write(array[i, j] + " ");
+        if (j != 0)
+        {
+            for (int k = j - 1; k >= 0; k--)
+            {
+                if (array[i, k + 1] < array[i, k])
+                {
+                    int temp = array[i, k + 1];
+                    array[i, k + 1] = array[i, k];
+                    array[i, k] = temp;
+                }
+            }
+        }
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+for (int i = 0; i < rowsVol; i++)
+{
+    for (int j = 0; j < columnsVol; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+
+
+
+// Задача 2: 
+
+
+System.Console.WriteLine("Введите количество строк массива");
+int rowsVol = Convert.ToInt32(Console.ReadLine());
+System.Console.WriteLine("Введите количество столбцов массива");
+int columnsVol = Convert.ToInt32(Console.ReadLine());
+
+int[,] array = new int[rowsVol, columnsVol];
+arrayRandomNumbers(array);
+PrintArray(array);
+
+
+int minSum = 0;
+int sum = SumElements(array, 0);
+for (int i = 1; i < array.GetLength(0); i++)
+{
+    int tempSumLine = SumElements(array, i);
+    if (sum > tempSumLine)
+    {
+        sum = tempSumLine;
+        minSum = i;
+    }
+}
+
+Console.WriteLine($"\n{minSum + 1} - строкa с наименьшей суммой ({sum}) элементов ");
+
+
+int SumElements(int[,] array, int i)
+{
+    int sum = array[i, 0];
+    for (int j = 1; j < array.GetLength(1); j++)
+    {
+        sum += array[i, j];
+    }
+    return sum;
+}
+
+
+void arrayRandomNumbers(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = new Random().Next(0, 10);
+        }
+    }
+}
+
+void PrintArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+
+// Задача 3: 
+System.Console.WriteLine("Введите количество столбцов массива");
+int rows = Convert.ToInt32(Console.ReadLine());
+System.Console.WriteLine("Введите количество строк массива");
+int columns = Convert.ToInt32(Console.ReadLine());
+
+int[,] firstArray = GetArray(rows, columns, 0, 10);
+Console.WriteLine();
+int[,] secondArray = GetArray(rows, columns, 0, 10);
+Console.WriteLine();
+int[,] GetArray(int rowsNumber, int columnsNumber, int firstElement, int secondElement)
+{
+    int[,] resultArray = new int[rowsNumber, columnsNumber];
+    for (int i = 0; i < rowsNumber; i++)
+    {
+        for (int j = 0; j < columnsNumber; j++)
+        {
+            resultArray[i, j] = new Random().Next(firstElement, secondElement + 1);
+            Console.Write(resultArray[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
+    return resultArray;
+}
+void PrintArray(int[,] arrayFirst, int[,] arraySecond)
+{
+    for (int i = 0; i < arrayFirst.GetLength(0); i++)
+    {
+        for (int j = 0; j < arrayFirst.GetLength(1); j++)
+        {
+            Console.Write(arrayFirst[i, j] * arraySecond[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
+}
+PrintArray(firstArray, secondArray);
+
+
+
+// Задача 4: 
+
+System.Console.WriteLine("Введите длину:");
+int length = Convert.ToInt32(Console.ReadLine());
+System.Console.WriteLine("Введите ширину:");
+int width = Convert.ToInt32(Console.ReadLine());
+System.Console.WriteLine("Введите высоту:");
+int height = Convert.ToInt32(Console.ReadLine());
+
+int element = 10;
+int[,,] array = new int[length, width, height];
+for (int i = 0; i < length; i++)
+{
+    for (int j = 0; j < width; j++)
+    {
+        for (int k = 0; k < height; k++)
+        {
+            element += new Random().Next(1,5 + 1);
+            Console.Write(10 + "(" + i + "," + j + "," + k + ")" + "\t");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+
+//   Задача 5: 
+
+Console.WriteLine("Введите размер массива");
+int size = Convert.ToInt32(Console.ReadLine());
+
+int[,] array = new int[size, size];
+int maxNumber = size * size;
+
+int row = 0;
+int columns = 0;
+bool incriment = true;
+
+for (int inputElement = 1;inputElement <= maxNumber; inputElement++)
+{
+    array[row, columns] = inputElement;
+    if (incriment)
+    {
+        if (columns != array.GetLength(1) - 1 && array[row, columns + 1] == 0) columns++;
+        else
+        {
+            if (row != array.GetLength(0) - 1 && array[row + 1, columns] == 0) row++;
+            else
+            {
+                incriment = false;
+                columns--;
+            }
+        }
+    }
+    else
+    {
+        if (columns != 0 && array[row, columns - 1] == 0) columns--;
+        else
+        {
+            if (row != 0 && array[row - 1, columns] == 0) row--;
+            else
+            {
+                incriment = true;
+                columns++;
+            }
+        }
+    }
+}
+for (int i = 0; i < array.GetLength(0); i++)
+{
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+        Console.Write(array[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+
+
+
+
